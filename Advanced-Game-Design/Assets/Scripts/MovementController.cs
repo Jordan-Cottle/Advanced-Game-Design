@@ -20,5 +20,10 @@ public class MovementController : MonoBehaviour
         velocity.z -= Acceleration * Time.deltaTime;
 
         Controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
