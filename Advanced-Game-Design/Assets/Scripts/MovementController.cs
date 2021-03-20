@@ -4,7 +4,6 @@ public class MovementController : MonoBehaviour
 {
     // Start is called before the first frame update
     public float MovementSpeed = 15f;
-    public float Acceleration = 1f;
     public CharacterController Controller;
     bool grounded;
     Vector3 velocity;
@@ -17,13 +16,8 @@ public class MovementController : MonoBehaviour
 
         velocity.x = horizontalInput;
         velocity.y = verticalInput;
-        velocity.z += Acceleration * Time.deltaTime;
 
         Controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
     }
 }
