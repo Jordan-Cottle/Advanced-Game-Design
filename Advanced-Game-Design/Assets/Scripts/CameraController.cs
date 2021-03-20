@@ -15,9 +15,15 @@ public class CameraController : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y") * MouseSensitivity * Time.deltaTime;
 
         XRotation -= mouseY;
-        XRotation = Mathf.Clamp(XRotation, -90f, 90f);
+        XRotation = Mathf.Clamp(XRotation, -45f, 45f);
+        Debug.Log(XRotation);
 
         transform.localRotation = Quaternion.Euler(XRotation, 0f, 0f);
         CharacterPos.Rotate(Vector3.up * mouseX);
+
+        float yRotation = Mathf.Clamp(CharacterPos.eulerAngles.y, 120, 240);
+        CharacterPos.eulerAngles = new Vector3(0, yRotation, 0);
+
+        Debug.Log(yRotation);
     }
 }

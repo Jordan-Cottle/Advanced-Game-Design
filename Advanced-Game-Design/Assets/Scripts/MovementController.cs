@@ -26,11 +26,6 @@ public class MovementController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical") * MovementSpeed * Time.deltaTime;
 
 
-        Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
-        Controller.Move(move);
-
-        velocity.y += Gravity * Time.deltaTime;
-
-        Controller.Move(velocity * Time.deltaTime);
+        Controller.Move(new Vector3(-horizontalInput, verticalInput, 0));
     }
 }
