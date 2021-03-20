@@ -15,9 +15,9 @@ public class MovementController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal") * MovementSpeed;
         float verticalInput = Input.GetAxis("Vertical") * MovementSpeed;
 
-        velocity.x = -horizontalInput;
+        velocity.x = horizontalInput;
         velocity.y = verticalInput;
-        velocity.z -= Acceleration * Time.deltaTime;
+        velocity.z += Acceleration * Time.deltaTime;
 
         Controller.Move(velocity * Time.deltaTime);
 
