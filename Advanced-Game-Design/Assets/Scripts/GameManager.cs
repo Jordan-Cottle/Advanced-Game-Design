@@ -21,8 +21,6 @@ public class GameManager : MonoBehaviour
 
         tunnelScale = TunnelPieces[0].transform.localScale.y;
         tunnelJump.z = tunnelScale * 4;
-
-        Objects.AddRange(TunnelPieces);
     }
 
     // Update is called once per frame
@@ -35,14 +33,17 @@ public class GameManager : MonoBehaviour
 
         velocity.z -= Acceleration * Time.deltaTime;
 
-        Vector3 offset = velocity * Time.deltaTime;
         foreach (var obj in Objects)
         {
-            obj.transform.Translate(offset, Space.World);
+            Rigidbody body = obj.GetComponent<Rigidbody>();
+            body.velocity = velocity;
         }
 
+        Vector3 offset = velocity * Time.deltaTime;
         foreach (var tunnelPiece in TunnelPieces)
         {
+            tunnelPiece.transform.Translate(offset, Space.World);
+
             if (tunnelPiece.transform.position.z < -tunnelScale)
             {
                 tunnelPiece.transform.Translate(tunnelJump, Space.World);
