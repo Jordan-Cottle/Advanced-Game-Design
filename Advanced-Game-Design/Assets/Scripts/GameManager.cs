@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     public Obstacle obstaclePrefab;
     public float Acceleration = 5f;
+    public float MaxSpeed = 25f;
 
     public List<Obstacle> Obstacles;
     public List<GameObject> TunnelPieces;
@@ -22,13 +23,7 @@ public class GameManager : MonoBehaviour
         tunnelScale = TunnelPieces[0].transform.localScale.y;
         tunnelJump.z = tunnelScale * 4;
 
-        for (int i = 0; i < 100; i++)
-        {
-            Vector3 pos = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Random.Range(25f, 50f));
-            Obstacle o = Instantiate(obstaclePrefab, pos, Quaternion.identity);
-
-            Obstacles.Add(o);
-        }
+        StartCoroutine("Spawn");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -41,7 +36,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        velocity.z -= Acceleration * Time.deltaTime;
+        velocity.z = Mathf.Clamp(velocity.z - Acceleration * Time.deltaTime, -MaxSpeed, 0f);
 
         foreach (var obstacle in Obstacles)
         {

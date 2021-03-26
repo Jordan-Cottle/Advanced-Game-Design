@@ -653,6 +653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 2598808751258034368, guid: c5e2d49b9129da84a9ad9737b7ea808d, type: 3}
   Acceleration: 1
+  MaxSpeed: 25
   Obstacles: []
   TunnelPieces:
   - {fileID: 1932559064}
