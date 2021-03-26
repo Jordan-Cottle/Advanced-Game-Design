@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
             Obstacles.Add(o);
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
