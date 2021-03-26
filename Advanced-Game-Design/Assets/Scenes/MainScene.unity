@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tunnel
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 07859347fda283846b2f919df285dcd8, type: 3}
+      propertyPath: m_TagString
+      value: Tunnel
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07859347fda283846b2f919df285dcd8, type: 3}
 --- !u!1 &946276991
@@ -356,6 +360,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -441,7 +446,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterPos: {fileID: 870000139}
-  MouseSensitivity: 1000
+  MouseSensitivity: 500
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76b57c3810247c440a466d0eb9a9203a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 5381625120078251549, guid: 841029b302b0b1b4085f20a5f0cbd741, type: 3}
 --- !u!1 &1058771095
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 2598808751258034368, guid: c5e2d49b9129da84a9ad9737b7ea808d, type: 3}
   Acceleration: 1
-  Obstacles: []
+  MaxSpeed: 150
   TunnelPieces:
   - {fileID: 1932559064}
   - {fileID: 1977974307}
@@ -842,6 +860,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 07859347fda283846b2f919df285dcd8, type: 3}
       propertyPath: m_Name
       value: Tunnel (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 07859347fda283846b2f919df285dcd8, type: 3}
+      propertyPath: m_TagString
+      value: Tunnel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07859347fda283846b2f919df285dcd8, type: 3}
