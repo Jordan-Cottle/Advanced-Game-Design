@@ -80,11 +80,14 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < Random.Range(1, 6); i++)
+            float difficultyRatio = -velocity.z / MaxSpeed;
+            for (int i = 0; i < Random.Range(1, (int)(15 * difficultyRatio) + 3); i++)
             {
                 SpawnObstacle();
             }
-            yield return new WaitForSeconds(Random.Range(0f, 1f));
+            float spawnDelay = Mathf.Max(0.1f, 0.5f - difficultyRatio);
+            Debug.Log($"Spawning another set of cubes after {spawnDelay} seconds");
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
