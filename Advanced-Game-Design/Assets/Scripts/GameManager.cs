@@ -5,17 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Obstacle obstaclePrefab;
-
     public float StartSpeed = 5f;
     public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
 
-    public float ThreatSpeed = 2f;
-
-    private float threatPosition = 0;
-    private float distanceTraveled = 0;
-    public float EscapeDistance = 1000f;
-    public float EscapeVelocity;
+    private float _distanceTraveled = 0;
+    public float DistanceTraveled { get => _distanceTraveled; private set => _distanceTraveled = value; }
 
     public static float SpawnDistance = 150;
 
@@ -27,7 +22,9 @@ public class GameManager : MonoBehaviour
     private Vector3 tunnelJump;
     private float tunnelScale;
 
-    Vector3 velocity;
+    private Vector3 velocity;
+    public float CurrentSpeed { get => -velocity.z; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,24 +72,7 @@ public class GameManager : MonoBehaviour
         }
 
         Vector3 offset = velocity * Time.deltaTime;
-        distanceTraveled += -offset.z;
-        if (distanceTraveled - threatPosition > EscapeDistance)
-        {
-            Debug.Log("Escape distance achieved!");
-        }
-        else
-        {
-            Debug.Log($"Threat is {distanceTraveled - threatPosition} away!");
-        }
-
-        if (-velocity.z > EscapeVelocity)
-        {
-            Debug.Log("Escape velocity Achieved!");
-        }
-        else
-        {
-            Debug.Log($"Still need to accelerate by {EscapeVelocity - (-velocity.z)}");
-        }
+        DistanceTraveled += -offset.z;
 
         foreach (var tunnelPiece in TunnelPieces)
         {
@@ -103,15 +83,13 @@ public class GameManager : MonoBehaviour
                 tunnelPiece.transform.Translate(tunnelJump, Space.World);
             }
         }
-
-        threatPosition += ThreatSpeed * Time.deltaTime;
     }
 
     private IEnumerator Spawn()
     {
         while (true)
         {
-            float difficultyRatio = -velocity.z / MaxSpeed;
+            float difficultyRatio = CurrentSpeed / MaxSpeed;
             for (int i = 0; i < Random.Range(1, (int)(15 * difficultyRatio) + 3); i++)
             {
                 SpawnObstacle();

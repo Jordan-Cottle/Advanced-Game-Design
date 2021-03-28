@@ -1020,8 +1020,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 10}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &744471493
 MonoBehaviour:
@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.603
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1778,6 +1778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1073645948}
   - component: {fileID: 1073645949}
+  - component: {fileID: 1073645947}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1785,6 +1786,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1073645947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073645946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf50cea720798b4f9d543ccb93513b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EscapeDistanceUI: {fileID: 807972752}
+  EscapeVelocityUI: {fileID: 1975035980}
+  ThreatSpeed: 2
+  EscapeDistance: 150
+  EscapeVelocity: 25
 --- !u!4 &1073645948
 Transform:
   m_ObjectHideFlags: 0
@@ -1815,9 +1833,6 @@ MonoBehaviour:
   StartSpeed: 10
   Acceleration: 1
   MaxSpeed: 150
-  ThreatSpeed: 2
-  EscapeDistance: 1000
-  EscapeVelocity: 100
   TunnelPieces:
   - {fileID: 1932559064}
   - {fileID: 1977974307}
@@ -2005,8 +2020,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 10}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1625032745
 MonoBehaviour:
@@ -2231,7 +2246,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.465
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
