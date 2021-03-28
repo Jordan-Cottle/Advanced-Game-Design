@@ -5,7 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Obstacle obstaclePrefab;
-    public float Acceleration = 5f;
+
+    public float StartSpeed = 5f;
+    public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
 
     public static float SpawnDistance = 150;
@@ -22,7 +24,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        velocity = new Vector3(0, 0, 0);
+        velocity = new Vector3(0, 0, -StartSpeed);
         tunnelJump = new Vector3(0, 0, 0);
 
         tunnelScale = TunnelPieces[0].transform.localScale.y;
