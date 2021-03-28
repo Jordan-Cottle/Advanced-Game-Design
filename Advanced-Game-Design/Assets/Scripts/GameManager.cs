@@ -10,6 +10,13 @@ public class GameManager : MonoBehaviour
     public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
 
+    public float ThreatSpeed = 2f;
+
+    private float threatPosition = 0;
+    private float distanceTraveled = 0;
+    public float EscapeDistance = 1000f;
+    public float EscapeVelocity;
+
     public static float SpawnDistance = 150;
 
     private Queue<Obstacle> deactivatedObstacles = new Queue<Obstacle>();
@@ -68,6 +75,25 @@ public class GameManager : MonoBehaviour
         }
 
         Vector3 offset = velocity * Time.deltaTime;
+        distanceTraveled += -offset.z;
+        if (distanceTraveled - threatPosition > EscapeDistance)
+        {
+            Debug.Log("Escape distance achieved!");
+        }
+        else
+        {
+            Debug.Log($"Threat is {distanceTraveled - threatPosition} away!");
+        }
+
+        if (-velocity.z > EscapeVelocity)
+        {
+            Debug.Log("Escape velocity Achieved!");
+        }
+        else
+        {
+            Debug.Log($"Still need to accelerate by {EscapeVelocity - (-velocity.z)}");
+        }
+
         foreach (var tunnelPiece in TunnelPieces)
         {
             tunnelPiece.transform.Translate(offset, Space.World);
@@ -77,6 +103,8 @@ public class GameManager : MonoBehaviour
                 tunnelPiece.transform.Translate(tunnelJump, Space.World);
             }
         }
+
+        threatPosition += ThreatSpeed * Time.deltaTime;
     }
 
     private IEnumerator Spawn()

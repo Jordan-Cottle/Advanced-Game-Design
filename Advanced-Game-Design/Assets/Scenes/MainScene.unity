@@ -1815,6 +1815,9 @@ MonoBehaviour:
   StartSpeed: 10
   Acceleration: 1
   MaxSpeed: 150
+  ThreatSpeed: 2
+  EscapeDistance: 1000
+  EscapeVelocity: 100
   TunnelPieces:
   - {fileID: 1932559064}
   - {fileID: 1977974307}
