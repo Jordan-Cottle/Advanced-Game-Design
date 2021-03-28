@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
         while (deactivatedObstacles.Count > 0)
         {
             Obstacle obstacle = deactivatedObstacles.Dequeue();
+            obstacle.gameObject.SetActive(false);
             availableObstacles.Enqueue(obstacle);
             obstacles.Remove(obstacle);
         }
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour
             obstacle = availableObstacles.Dequeue();
             obstacle.transform.position = pos;
         }
+
+        obstacle.gameObject.SetActive(true);
 
         float scale = Random.Range(1f, 3f);
         obstacle.transform.localScale = new Vector3(scale, scale, scale);
