@@ -7,7 +7,6 @@ public class HealthManager : MonoBehaviour
     public float MaxHealth;
     public Slider HealthBar;
 
-
     private float _currentHealth;
     public float CurrentHealth
     {
@@ -24,5 +23,13 @@ public class HealthManager : MonoBehaviour
         HealthBar.maxValue = MaxHealth;
 
         CurrentHealth = MaxHealth;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Obstacle")
+        {
+            CurrentHealth -= 5;
+        }
     }
 }
