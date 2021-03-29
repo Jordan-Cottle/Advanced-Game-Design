@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class HealthManager : MonoBehaviour
     private float lastHit = 0;
 
     public Slider HealthBar;
+    public Text LoseLabel;
 
     private float _currentHealth;
     public float CurrentHealth
@@ -37,10 +39,25 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    IEnumerator LoseGame()
+    {
+        LoseLabel.text = "Oops, looks like you lost!";
+        LoseLabel.color = Color.red;
+        LoseLabel.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(5);
+
+        Application.Quit();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Obstacle")
         {
+            if (CurrentHealth <= 0)
+            {
+                StartCoroutine(LoseGame());
+            }
             CurrentHealth -= 5;
             lastHit = Time.time;
         }
