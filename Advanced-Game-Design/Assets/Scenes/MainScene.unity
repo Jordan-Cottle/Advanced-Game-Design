@@ -1800,9 +1800,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EscapeDistanceUI: {fileID: 807972752}
   EscapeVelocityUI: {fileID: 1975035980}
+  WinLabel: {fileID: 1114040582}
   ThreatSpeed: 2
-  EscapeDistance: 150
-  EscapeVelocity: 25
+  EscapeDistance: 50
+  EscapeVelocity: 10
 --- !u!4 &1073645948
 Transform:
   m_ObjectHideFlags: 0

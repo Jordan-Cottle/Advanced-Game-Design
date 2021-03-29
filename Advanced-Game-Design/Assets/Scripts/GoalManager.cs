@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,8 @@ public class GoalManager : MonoBehaviour
 {
     public Slider EscapeDistanceUI;
     public Slider EscapeVelocityUI;
+
+    public Text WinLabel;
 
     private GameManager gameManager;
 
@@ -18,6 +21,8 @@ public class GoalManager : MonoBehaviour
 
     public float EscapeDistance = 1000f;
     public float EscapeVelocity;
+
+    private bool winSet = false;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +42,12 @@ public class GoalManager : MonoBehaviour
         EscapeVelocityUI.value = currentSpeed;
         EscapeDistanceUI.value = threatDistance;
 
+        int conditions_met = 0;
+
         if (threatDistance > EscapeDistance)
         {
             Debug.Log("Escape distance achieved!");
+            conditions_met += 1;
         }
         else
         {
@@ -48,6 +56,7 @@ public class GoalManager : MonoBehaviour
 
         if (currentSpeed > EscapeVelocity)
         {
+            conditions_met += 1;
             Debug.Log("Escape velocity Achieved!");
         }
         else
@@ -56,5 +65,27 @@ public class GoalManager : MonoBehaviour
         }
 
         threatPosition += ThreatSpeed * Time.deltaTime;
+
+        if (conditions_met >= 2)
+        {
+            StartCoroutine(WinGame());
+        }
+    }
+
+    IEnumerator WinGame()
+    {
+        if (winSet)
+        {
+            yield break;
+        }
+
+        Debug.Log("Congratulations, you win!");
+        WinLabel.text = "Congratulations, you win!";
+        WinLabel.gameObject.SetActive(true);
+        winSet = true;
+
+        yield return new WaitForSeconds(5);
+
+        Application.Quit();
     }
 }
