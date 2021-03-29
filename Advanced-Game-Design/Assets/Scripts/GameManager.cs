@@ -98,7 +98,6 @@ public class GameManager : MonoBehaviour
                 SpawnObstacle();
             }
             float spawnDelay = Mathf.Max(0.1f, 0.5f - difficultyRatio);
-            Debug.Log($"Spawning another set of cubes after {spawnDelay} seconds");
             yield return new WaitForSeconds(spawnDelay);
         }
     }
@@ -109,12 +108,10 @@ public class GameManager : MonoBehaviour
         Obstacle obstacle;
         if (availableObstacles.Count == 0)
         {
-            Debug.Log("Obstacle recycled!");
             obstacle = Instantiate(obstaclePrefab, pos, Quaternion.identity);
         }
         else
         {
-            Debug.Log("New obstacle created!");
             obstacle = availableObstacles.Dequeue();
             obstacle.transform.position = pos;
         }

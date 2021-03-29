@@ -46,22 +46,12 @@ public class GoalManager : MonoBehaviour
 
         if (threatDistance > EscapeDistance)
         {
-            Debug.Log("Escape distance achieved!");
             conditions_met += 1;
-        }
-        else
-        {
-            Debug.Log($"Threat is {threatDistance} away!");
         }
 
         if (currentSpeed > EscapeVelocity)
         {
             conditions_met += 1;
-            Debug.Log("Escape velocity Achieved!");
-        }
-        else
-        {
-            Debug.Log($"Still need to accelerate by {EscapeVelocity - (currentSpeed)}");
         }
 
         threatPosition += ThreatSpeed * Time.deltaTime;
@@ -79,7 +69,6 @@ public class GoalManager : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("Congratulations, you win!");
         WinLabel.text = "Congratulations, you win!";
         WinLabel.gameObject.SetActive(true);
         winSet = true;
