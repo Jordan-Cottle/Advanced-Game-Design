@@ -36,7 +36,7 @@ public class HealthManager : MonoBehaviour
     {
         if (Time.time - lastHit > RegenDelay)
         {
-            CurrentHealth += RegenRate * Time.deltaTime;
+            CurrentHealth = Mathf.Min(CurrentHealth + RegenRate * Time.deltaTime, MaxHealth);
         }
     }
 
