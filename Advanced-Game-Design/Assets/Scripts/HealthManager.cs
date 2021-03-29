@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthManager : MonoBehaviour
 {
@@ -47,7 +48,8 @@ public class HealthManager : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void OnCollisionEnter(Collision collision)

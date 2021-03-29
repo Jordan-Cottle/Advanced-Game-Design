@@ -7,4 +7,12 @@ public class GameStart : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
 }
