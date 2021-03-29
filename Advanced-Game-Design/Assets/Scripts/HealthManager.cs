@@ -5,6 +5,10 @@ public class HealthManager : MonoBehaviour
 {
 
     public float MaxHealth;
+    public float RegenRate = 2f;
+    public float RegenDelay = 5f;
+    private float lastHit = 0;
+
     public Slider HealthBar;
 
     private float _currentHealth;
@@ -25,11 +29,20 @@ public class HealthManager : MonoBehaviour
         CurrentHealth = MaxHealth;
     }
 
+    void Update()
+    {
+        if (Time.time - lastHit > RegenDelay)
+        {
+            CurrentHealth += RegenRate * Time.deltaTime;
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Obstacle")
         {
             CurrentHealth -= 5;
+            lastHit = Time.time;
         }
     }
 }
