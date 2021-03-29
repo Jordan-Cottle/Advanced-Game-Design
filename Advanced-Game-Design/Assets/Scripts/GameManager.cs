@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     private Queue<Obstacle> availableObstacles = new Queue<Obstacle>();
     private List<Obstacle> obstacles = new List<Obstacle>();
     public List<GameObject> TunnelPieces;
+    public Text SpeedLabel;
 
     private Vector3 tunnelJump;
     private float tunnelScale;
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
         }
 
         velocity.z = Mathf.Clamp(velocity.z - Acceleration * Time.deltaTime, -MaxSpeed, 0f);
+        SpeedLabel.text = $"Speed: {CurrentSpeed}";
 
         foreach (var obstacle in obstacles)
         {
