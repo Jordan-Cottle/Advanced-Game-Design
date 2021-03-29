@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GoalManager : MonoBehaviour
@@ -75,6 +76,7 @@ public class GoalManager : MonoBehaviour
 
         yield return new WaitForSeconds(5);
 
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.None;
     }
 }
