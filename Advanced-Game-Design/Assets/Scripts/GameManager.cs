@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public Obstacle obstaclePrefab;
-    public float Acceleration = 5f;
+    public float StartSpeed = 5f;
+    public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
+
+    private float _distanceTraveled = 0;
+    public float DistanceTraveled { get => _distanceTraveled; private set => _distanceTraveled = value; }
 
     public static float SpawnDistance = 150;
 
@@ -14,15 +19,18 @@ public class GameManager : MonoBehaviour
     private Queue<Obstacle> availableObstacles = new Queue<Obstacle>();
     private List<Obstacle> obstacles = new List<Obstacle>();
     public List<GameObject> TunnelPieces;
+    public Text SpeedLabel;
 
     private Vector3 tunnelJump;
     private float tunnelScale;
 
-    Vector3 velocity;
+    private Vector3 velocity;
+    public float CurrentSpeed { get => -velocity.z; }
+
     // Start is called before the first frame update
     void Start()
     {
-        velocity = new Vector3(0, 0, 0);
+        velocity = new Vector3(0, 0, -StartSpeed);
         tunnelJump = new Vector3(0, 0, 0);
 
         tunnelScale = TunnelPieces[0].transform.localScale.y;
@@ -42,6 +50,7 @@ public class GameManager : MonoBehaviour
         }
 
         velocity.z = Mathf.Clamp(velocity.z - Acceleration * Time.deltaTime, -MaxSpeed, 0f);
+        SpeedLabel.text = $"Speed: {CurrentSpeed}";
 
         foreach (var obstacle in obstacles)
         {
@@ -60,11 +69,14 @@ public class GameManager : MonoBehaviour
         while (deactivatedObstacles.Count > 0)
         {
             Obstacle obstacle = deactivatedObstacles.Dequeue();
+            obstacle.gameObject.SetActive(false);
             availableObstacles.Enqueue(obstacle);
             obstacles.Remove(obstacle);
         }
 
         Vector3 offset = velocity * Time.deltaTime;
+        DistanceTraveled += -offset.z;
+
         foreach (var tunnelPiece in TunnelPieces)
         {
             tunnelPiece.transform.Translate(offset, Space.World);
@@ -80,11 +92,13 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            for (int i = 0; i < Random.Range(1, 6); i++)
+            float difficultyRatio = CurrentSpeed / MaxSpeed;
+            for (int i = 0; i < Random.Range(1, (int)(15 * difficultyRatio) + 3); i++)
             {
                 SpawnObstacle();
             }
-            yield return new WaitForSeconds(Random.Range(0f, 1f));
+            float spawnDelay = Mathf.Max(0.1f, 0.5f - difficultyRatio);
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
 
@@ -94,15 +108,15 @@ public class GameManager : MonoBehaviour
         Obstacle obstacle;
         if (availableObstacles.Count == 0)
         {
-            Debug.Log("Obstacle recycled!");
             obstacle = Instantiate(obstaclePrefab, pos, Quaternion.identity);
         }
         else
         {
-            Debug.Log("New obstacle created!");
             obstacle = availableObstacles.Dequeue();
             obstacle.transform.position = pos;
         }
+
+        obstacle.gameObject.SetActive(true);
 
         float scale = Random.Range(1f, 3f);
         obstacle.transform.localScale = new Vector3(scale, scale, scale);
