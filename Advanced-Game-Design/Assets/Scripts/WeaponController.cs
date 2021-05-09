@@ -3,7 +3,9 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
 
-    public Bullet projectile;
+    public Bullet Projectile;
+
+    public EnergyCapacitor EnergySource;
 
     // Update is called once per frame
     void Update()
@@ -11,7 +13,11 @@ public class WeaponController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Fire!");
-            Bullet shot = Instantiate(projectile, this.transform.position + this.transform.forward * 1, this.transform.rotation);
+            if (EnergySource.CurrentCapacity > Projectile.FireEnergyCost)
+            {
+                EnergySource.UseEnergy(Projectile.FireEnergyCost);
+                Bullet shot = Instantiate(Projectile, this.transform.position + this.transform.forward * 1, this.transform.rotation);
+            }
         }
     }
 }

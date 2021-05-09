@@ -687,6 +687,7 @@ GameObject:
   - component: {fileID: 870000136}
   - component: {fileID: 870000135}
   - component: {fileID: 870000140}
+  - component: {fileID: 870000141}
   m_Layer: 3
   m_Name: Character
   m_TagString: Untagged
@@ -807,6 +808,21 @@ MonoBehaviour:
   RegenDelay: 5
   HealthBar: {fileID: 162018690}
   LoseLabel: {fileID: 1114040582}
+--- !u!114 &870000141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870000134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41725988d4558364aba1606c7449b293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCapacity: 100
+  RechargeRate: 15
+  RechargeDelay: 1
 --- !u!1001 &870640846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1102,7 +1118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b57c3810247c440a466d0eb9a9203a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 5381625120078251549, guid: 841029b302b0b1b4085f20a5f0cbd741, type: 3}
+  Projectile: {fileID: 5381625120078251549, guid: 841029b302b0b1b4085f20a5f0cbd741, type: 3}
+  EnergySource: {fileID: 870000141}
 --- !u!1 &1058771095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1684,6 +1701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1535010645}
   - component: {fileID: 1535010646}
+  - component: {fileID: 1535010647}
   m_Layer: 5
   m_Name: EnergyCapacity
   m_TagString: Untagged
@@ -1764,6 +1782,20 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1535010647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535010644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bea55c58cd51fd44896e6c4d7afd548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CapacityDisplay: {fileID: 1535010646}
+  Container: {fileID: 870000141}
 --- !u!1 &1781738388
 GameObject:
   m_ObjectHideFlags: 0

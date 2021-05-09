@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     public float ProjectileSpeed = 10f;
     public float Lifetime = 10f;
+    public float FireEnergyCost = 2f;
 
     void Start()
     {
