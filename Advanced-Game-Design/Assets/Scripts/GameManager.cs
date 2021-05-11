@@ -39,6 +39,17 @@ public class GameManager : MonoBehaviour
         StartCoroutine("Spawn");
 
         Cursor.lockState = CursorLockMode.Locked;
+
+    }
+
+    void OnEnable()
+    {
+        Obstacle.PlayerHit += PlayerCollisionHandler;
+    }
+
+    void OnDisable()
+    {
+        Obstacle.PlayerHit -= PlayerCollisionHandler;
     }
 
     // Update is called once per frame
@@ -132,5 +143,13 @@ public class GameManager : MonoBehaviour
     {
         velocity.z = Mathf.Clamp(velocity.z - amount, -MaxSpeed, 0f);
         SpeedLabel.text = $"Speed: {CurrentSpeed}";
+    }
+
+    public void PlayerCollisionHandler(float obstacleMass, Vector3 collisionVelocity)
+    {
+        // Slow down the player when they hit an obstacle
+        float velocityCost = Mathf.Min(obstacleMass * collisionVelocity.magnitude, velocity.magnitude / 2);
+
+        Accelerate(-velocityCost);
     }
 }

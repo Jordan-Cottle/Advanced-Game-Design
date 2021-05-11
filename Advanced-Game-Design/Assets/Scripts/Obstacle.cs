@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    public delegate void ObstacleCollision(float obstacleMass, Vector3 collisionVelocity);
+    public static event ObstacleCollision PlayerHit;
+
     private ScoreManager scoreManager;
 
     public static readonly float MinScale = 1;
@@ -79,6 +82,7 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            PlayerHit?.Invoke(rigidbody.mass, collision.relativeVelocity);
             this.Deactivate();
             return;
         }
