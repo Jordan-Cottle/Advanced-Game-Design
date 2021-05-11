@@ -1134,6 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Projectile: {fileID: 5381625120078251549, guid: 841029b302b0b1b4085f20a5f0cbd741, type: 3}
   EnergySource: {fileID: 870000141}
+  AutoFireRate: 0.25
 --- !u!1 &1058771095
 GameObject:
   m_ObjectHideFlags: 0
