@@ -117,19 +117,15 @@ public class GameManager : MonoBehaviour
             obstacle.transform.position = pos;
         }
 
-        obstacle.gameObject.SetActive(true);
-
-        float scale = Random.Range(1f, 3f);
+        float scale = Random.Range(Obstacle.MinScale, Obstacle.MaxScale);
         obstacle.transform.localScale = new Vector3(scale, scale, scale);
+        obstacle.Density = Random.Range(Obstacle.MinDensity, Obstacle.MaxDensity);
 
         Rigidbody body = obstacle.GetComponent<Rigidbody>();
-        body.mass = scale * 10f;
         body.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
-        obstacle.Durability = (int)Mathf.Round(scale);
         obstacle.Active = true;
 
-        obstacle.GetComponent<Renderer>().material.SetColor("_Color", Random.ColorHSV());
-
+        obstacle.gameObject.SetActive(true);
         obstacles.Add(obstacle);
     }
 }

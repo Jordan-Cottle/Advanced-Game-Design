@@ -12,7 +12,6 @@ public class WeaponController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Fire!");
             if (EnergySource.CurrentCapacity > Projectile.FireEnergyCost)
             {
                 EnergySource.UseEnergy(Projectile.FireEnergyCost);
