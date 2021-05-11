@@ -703,6 +703,7 @@ GameObject:
   - component: {fileID: 870000135}
   - component: {fileID: 870000140}
   - component: {fileID: 870000141}
+  - component: {fileID: 870000142}
   m_Layer: 3
   m_Name: Character
   m_TagString: Player
@@ -837,6 +838,21 @@ MonoBehaviour:
   _maxCapacity: 100
   RechargeRate: 15
   RechargeDelay: 1
+--- !u!114 &870000142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870000134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e900188f718ed41831b0f8cb837047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxCapacity: 500
+  _cooldownRate: 25
+  CooldownDelay: 0.5
 --- !u!1001 &870640846
 PrefabInstance:
   m_ObjectHideFlags: 0
