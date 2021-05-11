@@ -34,6 +34,9 @@ public class HealthManager : CapacityContainer
         LoseLabel.color = Color.red;
         LoseLabel.gameObject.SetActive(true);
 
+        // TODO: Play sound player destroyed
+        // TODO: Play animation for player destroyed
+
         yield return new WaitForSeconds(5);
 
         SceneManager.LoadScene("MainMenu");
@@ -49,6 +52,8 @@ public class HealthManager : CapacityContainer
                 StartCoroutine(LoseGame());
             }
             CurrentCapacity -= collision.relativeVelocity.magnitude;
+            // TODO: play sound player damaged
+            // TODO: create particles for player damaged
             _timeSinceLastEvent = 0;
         }
     }

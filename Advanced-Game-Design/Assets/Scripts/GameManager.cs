@@ -32,10 +32,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         velocity = new Vector3(0, 0, -StartSpeed);
-        tunnelJump = new Vector3(0, 0, 0);
 
         tunnelScale = TunnelPieces[0].transform.localScale.y;
-        tunnelJump.z = tunnelScale * 4;
+        tunnelJump = new Vector3(0, 0, tunnelScale * 4);
 
         StartCoroutine("Spawn");
 
