@@ -55,14 +55,12 @@ public class GameManager : MonoBehaviour
 
         foreach (var obstacle in obstacles)
         {
-            Rigidbody body = obstacle.GetComponent<Rigidbody>();
             if (obstacle.Active)
             {
-                body.velocity = velocity;
+                obstacle.Velocity = velocity;
             }
             else
             {
-                body.velocity = Vector3.zero;
                 deactivatedObstacles.Enqueue(obstacle);
             }
         }
@@ -94,7 +92,8 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             float difficultyRatio = CurrentSpeed / MaxSpeed;
-            for (int i = 0; i < Random.Range(1, (int)(15 * difficultyRatio) + 3); i++)
+            int obstaclesToSpawn = Random.Range(1, (int)(15 * difficultyRatio) + 3);
+            for (int i = 0; i < obstaclesToSpawn; i++)
             {
                 SpawnObstacle();
             }

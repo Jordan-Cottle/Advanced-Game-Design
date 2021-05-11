@@ -15,12 +15,27 @@ public class Obstacle : MonoBehaviour
     private static readonly float DurabilityRange = MaxDurability - MinDurability;
 
     public float Density = 1;
-    public bool Active = true;
+    public bool Active
+    {
+        get => gameObject.activeSelf;
+        set => gameObject.SetActive(value);
+    }
 
     private float Durability = 5;
     private float StartDurability;
 
-    private static Vector3 gone = new Vector3(-100, -100, 0);
+    private Vector3 _velocity;
+    public Vector3 Velocity
+    {
+        get => rigidbody.velocity;
+        set
+        {
+            var otherVelocity = rigidbody.velocity - _velocity;
+            _velocity = value;
+            rigidbody.velocity = otherVelocity + _velocity;
+        }
+    }
+
     new private Rigidbody rigidbody;
     new private Renderer renderer;
 
@@ -54,7 +69,7 @@ public class Obstacle : MonoBehaviour
     {
         if (this.transform.position.z < -5)
         {
-            this.Remove();
+            this.Deactivate();
         }
     }
 
@@ -62,7 +77,7 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            this.Remove();
+            this.Deactivate();
             return;
         }
 
@@ -78,13 +93,19 @@ public class Obstacle : MonoBehaviour
         if (Durability <= 0)
         {
             Debug.Log("Obstacle destroyed!");
-            this.Remove();
+            this.Deactivate();
         }
     }
 
-    void Remove()
+    void Stop()
     {
-        this.transform.position = gone;
+        rigidbody.velocity = Vector3.zero;
+        _velocity = Vector3.zero;
+    }
+
+    public void Deactivate()
+    {
+        Stop();
         this.Active = false;
     }
 }
