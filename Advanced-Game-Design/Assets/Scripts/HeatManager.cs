@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class HeatManager : CapacityContainer
 {
@@ -9,6 +10,8 @@ public class HeatManager : CapacityContainer
 
     private float _timeSinceLastEvent;
 
+    public bool Overheated { get; private set; }
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -18,7 +21,7 @@ public class HeatManager : CapacityContainer
     // Update is called once per frame
     void Update()
     {
-        if (_timeSinceLastEvent > CooldownDelay)
+        if (CooldownDelay > 0 || _timeSinceLastEvent > CooldownDelay)
         {
             Cooldown();
         }
@@ -40,5 +43,29 @@ public class HeatManager : CapacityContainer
         {
             _timeSinceLastEvent = 0;
         }
+
+        if (Full)
+        {
+            ForceCooldown();
+        }
+    }
+
+    void ForceCooldown()
+    {
+        Debug.Log("Too much heat, forced cooldown activating");
+        Disable();
+        StartCoroutine(EnableAfter(2f));
+    }
+    void Disable()
+    {
+        // TODO: play overheat sound
+        // TODO: display overheat visuals
+        Overheated = true;
+    }
+
+    IEnumerator EnableAfter(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Overheated = false;
     }
 }

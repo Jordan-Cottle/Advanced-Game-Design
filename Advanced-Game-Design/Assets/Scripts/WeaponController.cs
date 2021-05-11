@@ -15,12 +15,9 @@ public class WeaponController : MonoBehaviour
     private HeatManager heatManager;
     private float heatTax => 1 + (heatManager.CurrentCapacity / 100);
 
-    public bool CanFire { get; private set; }
-
     void Awake()
     {
         heatManager = GetComponentInParent<HeatManager>();
-        CanFire = true;
     }
 
     // Update is called once per frame
@@ -35,7 +32,7 @@ public class WeaponController : MonoBehaviour
 
     void RapidFire()
     {
-        if (!CanFire)
+        if (heatManager.Overheated)
         {
             // TODO: play failed to fire sound
             return;
@@ -54,30 +51,6 @@ public class WeaponController : MonoBehaviour
             Bullet shot = Instantiate(Projectile, this.transform.position + this.transform.forward * 1, this.transform.rotation);
             timeSinceLastFire = 0;
             heatManager.GenerateHeat(15);
-
-            if (heatManager.Full)
-            {
-                ForceCooldown();
-            }
         }
-    }
-
-    void ForceCooldown()
-    {
-        Debug.Log("Weapon too hot, forced cooldown activating");
-        Disable();
-        StartCoroutine(EnableAfter(2f));
-    }
-    void Disable()
-    {
-        // TODO: play disable sound
-        // TODO: display disabled visuals
-        CanFire = false;
-    }
-
-    IEnumerator EnableAfter(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        CanFire = true;
     }
 }
