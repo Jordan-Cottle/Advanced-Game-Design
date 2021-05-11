@@ -50,8 +50,7 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        velocity.z = Mathf.Clamp(velocity.z - Acceleration * Time.deltaTime, -MaxSpeed, 0f);
-        SpeedLabel.text = $"Speed: {CurrentSpeed}";
+        Accelerate(Acceleration * Time.deltaTime);
 
         foreach (var obstacle in obstacles)
         {
@@ -91,6 +90,7 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
+            // TODO: update spawn rate/difficulty to scale on distance instead of speed
             float difficultyRatio = CurrentSpeed / MaxSpeed;
             int obstaclesToSpawn = Random.Range(1, (int)(15 * difficultyRatio) + 3);
             for (int i = 0; i < obstaclesToSpawn; i++)
@@ -126,5 +126,11 @@ public class GameManager : MonoBehaviour
 
         obstacle.gameObject.SetActive(true);
         obstacles.Add(obstacle);
+    }
+
+    public void Accelerate(float amount)
+    {
+        velocity.z = Mathf.Clamp(velocity.z - amount, -MaxSpeed, 0f);
+        SpeedLabel.text = $"Speed: {CurrentSpeed}";
     }
 }

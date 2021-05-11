@@ -32,7 +32,6 @@ public class HeatManager : CapacityContainer
     void Cooldown()
     {
         CurrentCapacity -= (CooldownRate * CurrentCapacity) * Time.deltaTime;
-        Debug.Log($"Ship cooling: {CurrentCapacity}");
     }
 
     public void GenerateHeat(float amount, bool resetCooldown = true)
