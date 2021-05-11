@@ -130,11 +130,10 @@ public class GameManager : MonoBehaviour
         obstacle.transform.localScale = new Vector3(scale, scale, scale);
         obstacle.Density = Random.Range(Obstacle.MinDensity, Obstacle.MaxDensity);
 
-        Rigidbody body = obstacle.GetComponent<Rigidbody>();
+        obstacle.Active = true;
         obstacle.rigidbody.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
         obstacle.rigidbody.AddForce(Random.insideUnitSphere * ObstacleStartingForce, ForceMode.Impulse);
 
-        obstacle.Active = true;
         obstacles.Add(obstacle);
     }
 
