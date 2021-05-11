@@ -10,10 +10,15 @@ public class Obstacle : MonoBehaviour
 
     private static readonly float DensityRange = MaxDensity - MinDensity;
 
+    private static readonly float MinDurability = MinScale * MinDensity;
+    private static readonly float MaxDurability = MaxScale * MaxDensity;
+    private static readonly float DurabilityRange = MaxDurability - MinDurability;
+
     public float Density = 1;
     public bool Active = true;
 
     private float Durability = 5;
+    private float StartDurability;
 
     private static Vector3 gone = new Vector3(-100, -100, 0);
     new private Rigidbody rigidbody;
@@ -29,10 +34,19 @@ public class Obstacle : MonoBehaviour
     {
         rigidbody.mass = transform.localScale.magnitude * Density;
 
-        Durability = rigidbody.mass * Density;
+        StartDurability = rigidbody.mass * Density;
+        Durability = StartDurability;
 
-        float colorScale = (Density - MinDensity) / DensityRange; // Denser materials  == Darker
-        Color color = new Color(colorScale, colorScale, colorScale);
+        Recolor();
+    }
+
+    void Recolor()
+    {
+        // Denser material  == Darker
+        float colorScale = (Density - MinDensity) / DensityRange;
+        // Less durability == more transparent TODO: use texture instead
+        float alphaScale = Mathf.Clamp(0.25f + (Durability / StartDurability), 0.25f, 1.0f);
+        Color color = new Color(colorScale, colorScale, colorScale, alphaScale);
         renderer.material.SetColor("_Color", color);
     }
 
@@ -43,6 +57,7 @@ public class Obstacle : MonoBehaviour
             this.Remove();
         }
     }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
@@ -55,6 +70,7 @@ public class Obstacle : MonoBehaviour
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             Durability -= bullet.Power;
+            Recolor();
 
             Debug.Log($"Obstacle hit: {Durability} durability remaining");
         }
