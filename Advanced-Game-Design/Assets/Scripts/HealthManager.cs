@@ -3,41 +3,29 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class HealthManager : MonoBehaviour
+public class HealthManager : CapacityContainer
 {
 
-    public float MaxHealth;
-    public float RegenRate = 2f;
-    public float RegenDelay = 5f;
-    private float lastHit = 0;
+    public float RechargeRate;
+    public float RechargeDelay;
 
-    public Slider HealthBar;
+    private float _timeSinceLastEvent;
+
     public Text LoseLabel;
-
-    private float _currentHealth;
-    public float CurrentHealth
-    {
-        get => _currentHealth; private set
-        {
-            _currentHealth = Mathf.Max(value, 0);
-            HealthBar.value = value;
-        }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        HealthBar.minValue = 0;
-        HealthBar.maxValue = MaxHealth;
-
-        CurrentHealth = MaxHealth;
-    }
 
     void Update()
     {
-        if (Time.time - lastHit > RegenDelay)
+        if (_timeSinceLastEvent > RechargeDelay)
         {
-            CurrentHealth = Mathf.Min(CurrentHealth + RegenRate * Time.deltaTime, MaxHealth);
+            PassiveRecharge();
         }
+
+        _timeSinceLastEvent += Time.deltaTime;
+    }
+
+    void PassiveRecharge()
+    {
+        CurrentCapacity = Mathf.Min(CurrentCapacity + (RechargeRate * Time.deltaTime), MaxCapacity);
     }
 
     IEnumerator LoseGame()
@@ -56,12 +44,12 @@ public class HealthManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "Obstacle")
         {
-            if (CurrentHealth <= 0)
+            if (CurrentCapacity <= 0)
             {
                 StartCoroutine(LoseGame());
             }
-            CurrentHealth -= 5;
-            lastHit = Time.time;
+            CurrentCapacity -= 5;
+            _timeSinceLastEvent = 0;
         }
     }
 }
