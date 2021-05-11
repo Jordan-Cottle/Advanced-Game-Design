@@ -851,8 +851,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxCapacity: 500
-  _cooldownRate: 25
-  CooldownDelay: 0.5
+  _cooldownRate: 15
+  CooldownDelay: -1
 --- !u!1001 &870640846
 PrefabInstance:
   m_ObjectHideFlags: 0
