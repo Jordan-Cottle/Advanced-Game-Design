@@ -24,7 +24,7 @@ public class EnergyCapacitor : CapacityContainer
 
     void PassiveRecharge()
     {
-        CurrentCapacity = Mathf.Min(CurrentCapacity + (RechargeRate * Time.deltaTime), MaxCapacity);
+        CurrentCapacity = CurrentCapacity + (RechargeRate * Time.deltaTime);
     }
 
     public void UseEnergy(float amount, bool triggerRechargeCooldown = true)

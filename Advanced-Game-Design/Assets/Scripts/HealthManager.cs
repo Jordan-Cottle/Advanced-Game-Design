@@ -25,7 +25,7 @@ public class HealthManager : CapacityContainer
 
     void PassiveRecharge()
     {
-        CurrentCapacity = Mathf.Min(CurrentCapacity + (RechargeRate * Time.deltaTime), MaxCapacity);
+        CurrentCapacity = CurrentCapacity + (RechargeRate * Time.deltaTime);
     }
 
     IEnumerator LoseGame()
