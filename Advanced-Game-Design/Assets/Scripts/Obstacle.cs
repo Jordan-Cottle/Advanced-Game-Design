@@ -40,7 +40,7 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    new private Rigidbody rigidbody;
+    new public Rigidbody rigidbody { get; private set; }
     new private Renderer renderer;
 
     void Awake()

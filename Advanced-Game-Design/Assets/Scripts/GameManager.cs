@@ -10,11 +10,10 @@ public class GameManager : MonoBehaviour
     public float StartSpeed = 5f;
     public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
-
-    private float _distanceTraveled = 0;
-    public float DistanceTraveled { get => _distanceTraveled; private set => _distanceTraveled = value; }
+    public float DistanceTraveled { get; private set; }
 
     public static float SpawnDistance = 150;
+    public float ObstacleStartingForce;
 
     private Queue<Obstacle> deactivatedObstacles = new Queue<Obstacle>();
     private Queue<Obstacle> availableObstacles = new Queue<Obstacle>();
@@ -132,10 +131,10 @@ public class GameManager : MonoBehaviour
         obstacle.Density = Random.Range(Obstacle.MinDensity, Obstacle.MaxDensity);
 
         Rigidbody body = obstacle.GetComponent<Rigidbody>();
-        body.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
-        obstacle.Active = true;
+        obstacle.rigidbody.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
+        obstacle.rigidbody.AddForce(Random.insideUnitSphere * ObstacleStartingForce, ForceMode.Impulse);
 
-        obstacle.gameObject.SetActive(true);
+        obstacle.Active = true;
         obstacles.Add(obstacle);
     }
 
