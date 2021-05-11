@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
+    private ScoreManager scoreManager;
 
     public static readonly float MinScale = 1;
     public static readonly float MaxScale = 5;
@@ -43,6 +44,7 @@ public class Obstacle : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void OnEnable()
@@ -93,6 +95,7 @@ public class Obstacle : MonoBehaviour
         if (Durability <= 0)
         {
             Debug.Log("Obstacle destroyed!");
+            scoreManager.AddScore(StartDurability);
             this.Deactivate();
         }
     }
