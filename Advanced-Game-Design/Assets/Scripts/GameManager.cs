@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Obstacle obstaclePrefab;
+
+    [SerializeField]
+    private List<Texture> _tunnelTextures;
     public float StartSpeed = 5f;
     public float Acceleration = 0.5f;
     public float MaxSpeed = 25f;
@@ -39,6 +42,13 @@ public class GameManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
+        Texture texture = _tunnelTextures[Random.Range(0, _tunnelTextures.Count - 1)];
+        foreach (var tunnelPiece in TunnelPieces)
+        {
+            var renderer = tunnelPiece.GetComponent<Renderer>();
+
+            renderer.material.SetTexture("_MainTex", texture);
+        }
     }
 
     void OnEnable()

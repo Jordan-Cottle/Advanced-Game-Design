@@ -1578,6 +1578,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 2598808751258034368, guid: c5e2d49b9129da84a9ad9737b7ea808d, type: 3}
+  _tunnelTextures:
+  - {fileID: 2800000, guid: d532e5a9bcea7b245b8e9aa8ff608299, type: 3}
+  - {fileID: 2800000, guid: c5e31d572687232478966e30b4351b45, type: 3}
+  - {fileID: 2800000, guid: b1ef2e4304b23374ca08f413820bef83, type: 3}
   StartSpeed: 10
   Acceleration: 1
   MaxSpeed: 150
