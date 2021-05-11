@@ -48,7 +48,7 @@ public class HealthManager : CapacityContainer
             {
                 StartCoroutine(LoseGame());
             }
-            CurrentCapacity -= 5;
+            CurrentCapacity -= collision.relativeVelocity.magnitude;
             _timeSinceLastEvent = 0;
         }
     }
