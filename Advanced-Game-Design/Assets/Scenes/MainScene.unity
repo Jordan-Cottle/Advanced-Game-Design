@@ -1630,6 +1630,16 @@ MonoBehaviour:
     MinPitch: 0.5
     MaxPitch: 1.5
     Loop: 0
+  - _name: ShieldHit
+    _clips:
+    - {fileID: 8300000, guid: f7179aa146bdab14bae72b9462266132, type: 3}
+    - {fileID: 8300000, guid: 2fe630942be143941a6288bc5421007f, type: 3}
+    - {fileID: 8300000, guid: 7c820f0112206e845a8ca06fcab7faa8, type: 3}
+    MinVolume: 0.8
+    MaxVolume: 1
+    MinPitch: 1.2
+    MaxPitch: 1.5
+    Loop: 0
 --- !u!82 &1073645951
 AudioSource:
   m_ObjectHideFlags: 0

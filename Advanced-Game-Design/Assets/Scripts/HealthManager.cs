@@ -55,7 +55,7 @@ public class HealthManager : CapacityContainer
 
             Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
             CurrentCapacity -= collision.relativeVelocity.magnitude * collision.rigidbody.mass;
-            // TODO: play sound player damaged
+            AudioManager.Instance.Play("ShieldHit");
             // TODO: create particles for player damaged
             _timeSinceLastEvent = 0;
         }
