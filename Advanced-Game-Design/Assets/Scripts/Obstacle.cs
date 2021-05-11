@@ -93,6 +93,8 @@ public class Obstacle : MonoBehaviour
             Durability -= bullet.Power;
             Recolor();
 
+            AudioManager.Instance?.Play("Hit");
+
             Debug.Log($"Obstacle hit: {Durability} durability remaining");
         }
 

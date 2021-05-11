@@ -34,7 +34,7 @@ public class HealthManager : CapacityContainer
         LoseLabel.color = Color.red;
         LoseLabel.gameObject.SetActive(true);
 
-        // TODO: Play sound player destroyed
+        AudioManager.Instance?.Play("Explode");
         // TODO: Play animation for player destroyed
 
         yield return new WaitForSeconds(5);
@@ -50,6 +50,7 @@ public class HealthManager : CapacityContainer
             if (CurrentCapacity <= 0)
             {
                 StartCoroutine(LoseGame());
+                return;
             }
 
             Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();

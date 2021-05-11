@@ -51,6 +51,7 @@ public class WeaponController : MonoBehaviour
             Bullet shot = Instantiate(Projectile, this.transform.position + this.transform.forward * 1, this.transform.rotation);
             timeSinceLastFire = 0;
             heatManager.GenerateHeat(15);
+            AudioManager.Instance?.Play("Shoot");
         }
     }
 }
