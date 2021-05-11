@@ -63,7 +63,7 @@ public class Obstacle : MonoBehaviour
     void Recolor()
     {
         // Denser material  == Darker
-        float colorScale = (Density - MinDensity) / DensityRange;
+        float colorScale = (MaxDensity - Density) / DensityRange;
         // Less durability == more transparent TODO: use texture instead
         float alphaScale = Mathf.Clamp(0.25f + (Durability / StartDurability), 0.25f, 1.0f);
         Color color = new Color(colorScale, colorScale, colorScale, alphaScale);
