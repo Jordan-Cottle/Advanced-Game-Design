@@ -1,1 +1,5 @@
 nebula backgrounds: https://opengameart.org/content/seamless-space-backgrounds
+
+granite texture: https://opengameart.org/content/granite-texture-rough-white-and-black-seamless-texture-with-normalmap
+
+crosshair: Me + ms paint
