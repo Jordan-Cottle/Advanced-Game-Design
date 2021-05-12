@@ -138,12 +138,15 @@ public class Obstacle : MonoBehaviour
         {
             scoreManager?.AddScore(StartDurability);
 
+            collisionRubble.transform.rotation = Quaternion.LookRotation(transform.position - collision.gameObject.transform.position);
             Explode();
         }
     }
 
     void Explode()
     {
+        collisionRubble.transform.parent = null;
+        collisionRubble.Emit((int)(transform.localScale.magnitude * 10));
         finalExplosion.transform.parent = null;
         finalExplosion.Play(true);
         StartCoroutine(cleanupExplosionAfter(finalExplosion.main.duration));
@@ -155,6 +158,7 @@ public class Obstacle : MonoBehaviour
         yield return new WaitForSeconds(duration);
         finalExplosion.Clear(true);
         finalExplosion.transform.parent = transform;
+        collisionRubble.transform.parent = transform;
     }
 
     void Stop()
