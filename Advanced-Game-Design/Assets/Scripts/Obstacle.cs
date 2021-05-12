@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System.Collections;
 
 public class Obstacle : MonoBehaviour
 {
@@ -7,7 +7,8 @@ public class Obstacle : MonoBehaviour
     public static event ObstacleCollision PlayerHit;
 
     private ScoreManager scoreManager;
-    new private ParticleSystem particleSystem;
+    private ParticleSystem collisionRubble;
+    private ParticleSystem finalExplosion;
 
     public static readonly float MinScale = 1;
     public static readonly float MaxScale = 5;
@@ -50,7 +51,8 @@ public class Obstacle : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
         scoreManager = FindObjectOfType<ScoreManager>();
-        particleSystem = GetComponentInChildren<ParticleSystem>();
+        collisionRubble = transform.Find("CollisionRubble").GetComponent<ParticleSystem>();
+        finalExplosion = transform.Find("EnergyExplosion").GetComponent<ParticleSystem>();
     }
 
     void OnEnable()
@@ -95,9 +97,8 @@ public class Obstacle : MonoBehaviour
             Durability -= bullet.Power;
             Recolor();
 
-            particleSystem.transform.rotation = Quaternion.LookRotation(collision.gameObject.transform.position - transform.position);
-            particleSystem.Emit((int)Mathf.Ceil(collision.relativeVelocity.magnitude));
-
+            collisionRubble.transform.rotation = Quaternion.LookRotation(collision.gameObject.transform.position - transform.position);
+            collisionRubble.Emit((int)Mathf.Ceil(collision.relativeVelocity.magnitude));
 
             AudioManager.Instance?.Play("Hit");
 
@@ -108,8 +109,24 @@ public class Obstacle : MonoBehaviour
         {
             Debug.Log("Obstacle destroyed!");
             scoreManager.AddScore(StartDurability);
-            this.Deactivate();
+
+            Explode();
         }
+    }
+
+    void Explode()
+    {
+        finalExplosion.transform.parent = null;
+        finalExplosion.Play(true);
+        StartCoroutine(cleanupExplosionAfter(finalExplosion.main.duration));
+        Deactivate();
+    }
+
+    IEnumerator cleanupExplosionAfter(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        finalExplosion.Clear(true);
+        finalExplosion.transform.parent = transform;
     }
 
     void Stop()
