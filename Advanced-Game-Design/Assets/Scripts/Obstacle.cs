@@ -21,7 +21,20 @@ public class Obstacle : MonoBehaviour
     private static readonly float MaxDurability = MaxScale * MaxDensity;
     private static readonly float DurabilityRange = MaxDurability - MinDurability;
 
-    public float Density = 1;
+    private float _density;
+    public float Density
+    {
+        get => _density;
+        set
+        {
+            _density = value;
+
+            Rigidbody.mass = transform.localScale.magnitude * Density;
+            StartDurability = Rigidbody.mass * Density;
+            Durability = StartDurability;
+            Recolor();
+        }
+    }
     public bool Active
     {
         get => gameObject.activeSelf;
@@ -34,35 +47,52 @@ public class Obstacle : MonoBehaviour
     private Vector3 _velocity;
     public Vector3 Velocity
     {
-        get => rigidbody.velocity;
+        get => Rigidbody.velocity;
         set
         {
-            var otherVelocity = rigidbody.velocity - _velocity;
+            var otherVelocity = Rigidbody.velocity - _velocity;
             _velocity = value;
-            rigidbody.velocity = otherVelocity + _velocity;
+            Rigidbody.velocity = otherVelocity + _velocity;
         }
     }
 
-    new public Rigidbody rigidbody { get; private set; }
+    public Rigidbody Rigidbody { get; private set; }
     new private Renderer renderer;
 
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        Rigidbody = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
         scoreManager = FindObjectOfType<ScoreManager>();
         collisionRubble = transform.Find("CollisionRubble").GetComponent<ParticleSystem>();
         finalExplosion = transform.Find("EnergyExplosion").GetComponent<ParticleSystem>();
     }
 
-    void OnEnable()
+    public void Setup(float scale, float density, Vector3 angularVelocity)
     {
-        rigidbody.mass = transform.localScale.magnitude * Density;
-
-        StartDurability = rigidbody.mass * Density;
-        Durability = StartDurability;
-
-        Recolor();
+        Setup(
+            new Vector3(scale, scale, scale),
+            density,
+            angularVelocity,
+            Vector3.zero
+        );
+    }
+    public void Setup(float scale, float density, Vector3 angularVelocity, Vector3 startKick)
+    {
+        Setup(
+            new Vector3(scale, scale, scale),
+            density,
+            angularVelocity,
+            startKick
+        );
+    }
+    public void Setup(Vector3 scale, float density, Vector3 angularVelocity, Vector3 startKick)
+    {
+        transform.localScale = scale;
+        Density = density;
+        Active = true;
+        Rigidbody.angularVelocity = angularVelocity;
+        Rigidbody.AddForce(startKick, ForceMode.Impulse);
     }
 
     void Recolor()
@@ -86,7 +116,7 @@ public class Obstacle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            PlayerHit?.Invoke(rigidbody.mass, collision.relativeVelocity);
+            PlayerHit?.Invoke(Rigidbody.mass, collision.relativeVelocity);
             this.Deactivate();
             return;
         }
@@ -101,12 +131,12 @@ public class Obstacle : MonoBehaviour
             collisionRubble.Emit((int)Mathf.Ceil(collision.relativeVelocity.magnitude));
 
             AudioManager.Instance?.Play("Hit");
-            scoreManager.AddScore(1);
+            scoreManager?.AddScore(1);
         }
 
         if (Durability <= 0)
         {
-            scoreManager.AddScore(StartDurability);
+            scoreManager?.AddScore(StartDurability);
 
             Explode();
         }
@@ -129,7 +159,7 @@ public class Obstacle : MonoBehaviour
 
     void Stop()
     {
-        rigidbody.velocity = Vector3.zero;
+        Rigidbody.velocity = Vector3.zero;
         _velocity = Vector3.zero;
     }
 

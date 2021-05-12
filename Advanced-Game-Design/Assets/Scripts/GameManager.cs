@@ -143,12 +143,16 @@ public class GameManager : MonoBehaviour
         }
 
         float scale = Random.Range(Obstacle.MinScale, Obstacle.MaxScale);
-        obstacle.transform.localScale = new Vector3(scale, scale, scale);
-        obstacle.Density = Random.Range(Obstacle.MinDensity, Obstacle.MaxDensity);
+        float density = Random.Range(Obstacle.MinDensity, Obstacle.MaxDensity);
+        Vector3 angularVelocity = new Vector3(Random.value, Random.value, Random.value);
+        Vector3 startKick = Random.insideUnitSphere * ObstacleStartingForce;
 
-        obstacle.Active = true;
-        obstacle.rigidbody.angularVelocity = new Vector3(Random.value, Random.value, Random.value);
-        obstacle.rigidbody.AddForce(Random.insideUnitSphere * ObstacleStartingForce, ForceMode.Impulse);
+        obstacle.Setup(
+            scale,
+            density,
+            angularVelocity,
+            startKick
+        );
 
         obstacles.Add(obstacle);
     }

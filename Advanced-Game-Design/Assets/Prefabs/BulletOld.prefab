@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5381625120078251549}
   - component: {fileID: -2488959610741175864}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletOld
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,8 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc8e89eb13390564198d0124c648cc80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ProjectileSpeed: 50
-  Lifetime: 10
+  ProjectileSpeed: 0
+  Lifetime: 3
   BaseEnergyCost: 0.5
   Power: 1
 --- !u!54 &-2488959610741175864
