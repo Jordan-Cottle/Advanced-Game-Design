@@ -101,13 +101,11 @@ public class Obstacle : MonoBehaviour
             collisionRubble.Emit((int)Mathf.Ceil(collision.relativeVelocity.magnitude));
 
             AudioManager.Instance?.Play("Hit");
-
-            Debug.Log($"Obstacle hit: {Durability} durability remaining");
+            scoreManager.AddScore(1);
         }
 
         if (Durability <= 0)
         {
-            Debug.Log("Obstacle destroyed!");
             scoreManager.AddScore(StartDurability);
 
             Explode();
