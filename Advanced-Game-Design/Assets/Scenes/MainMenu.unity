@@ -996,8 +996,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObstaclePrefeb: {fileID: 2598808751258034368, guid: c5e2d49b9129da84a9ad9737b7ea808d, type: 3}
   BulletPrefab: {fileID: 2952725713604914286, guid: 0384c30d477d4ea49895a3f53f88a0c2, type: 3}
-  BulletSpawnRate: 0.25
-  ObstacleSpawnRate: 1
+  BulletSpawnRate: 0.175
+  ObstacleSpawnRate: 0.5
   SpawnDistance: 50
 --- !u!1001 &1704573788
 PrefabInstance:
@@ -1049,6 +1049,14 @@ PrefabInstance:
     - target: {fileID: 3464424396869915708, guid: ff9779ede1f6bb04fa389677f2b35d84, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6349201264050837734, guid: ff9779ede1f6bb04fa389677f2b35d84, type: 3}
+      propertyPath: Sounds.Array.data[1].MaxVolume
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6349201264050837734, guid: ff9779ede1f6bb04fa389677f2b35d84, type: 3}
+      propertyPath: Sounds.Array.data[1].MinVolume
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 7237641276501971687, guid: ff9779ede1f6bb04fa389677f2b35d84, type: 3}
       propertyPath: m_Name

@@ -124,7 +124,8 @@ public class Obstacle : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
-            Durability -= bullet.Power;
+            float damage = bullet.Rigidbody.mass * collision.relativeVelocity.magnitude * bullet.Power;
+            Durability -= damage;
             Recolor();
 
             collisionRubble.transform.rotation = Quaternion.LookRotation(collision.gameObject.transform.position - transform.position);
