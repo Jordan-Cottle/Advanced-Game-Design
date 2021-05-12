@@ -13,6 +13,13 @@ public class HealthManager : CapacityContainer
 
     public Text LoseLabel;
 
+    private ParticleSystem deathExplosion;
+
+    void Awake()
+    {
+        deathExplosion = transform.Find("BigExplosion").GetComponent<ParticleSystem>();
+    }
+
     void Update()
     {
         if (_timeSinceLastEvent > RechargeDelay)
@@ -35,7 +42,7 @@ public class HealthManager : CapacityContainer
         LoseLabel.gameObject.SetActive(true);
 
         AudioManager.Instance?.Play("Explode");
-        // TODO: Play animation for player destroyed
+        deathExplosion.Play(true);
 
         yield return new WaitForSeconds(5);
 
