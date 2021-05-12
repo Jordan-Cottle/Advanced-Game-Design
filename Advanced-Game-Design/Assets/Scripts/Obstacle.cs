@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour
     public static event ObstacleCollision PlayerHit;
 
     private ScoreManager scoreManager;
+    new private ParticleSystem particleSystem;
 
     public static readonly float MinScale = 1;
     public static readonly float MaxScale = 5;
@@ -49,6 +50,7 @@ public class Obstacle : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         renderer = GetComponent<Renderer>();
         scoreManager = FindObjectOfType<ScoreManager>();
+        particleSystem = GetComponentInChildren<ParticleSystem>();
     }
 
     void OnEnable()
@@ -63,7 +65,7 @@ public class Obstacle : MonoBehaviour
 
     void Recolor()
     {
-        float densityRatio = (MaxDensity - Density) / DensityRange;
+        float densityRatio = Density / MaxDensity;
 
         renderer.material.SetFloat("_DensityRatio", densityRatio);
         renderer.material.SetFloat("_MaxDurability", StartDurability);
@@ -92,6 +94,10 @@ public class Obstacle : MonoBehaviour
             Bullet bullet = collision.gameObject.GetComponent<Bullet>();
             Durability -= bullet.Power;
             Recolor();
+
+            particleSystem.transform.rotation = Quaternion.LookRotation(collision.gameObject.transform.position - transform.position);
+            particleSystem.Emit((int)Mathf.Ceil(collision.relativeVelocity.magnitude));
+
 
             AudioManager.Instance?.Play("Hit");
 
