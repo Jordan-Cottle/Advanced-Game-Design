@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public float MaxSpeed = 25f;
     public float DistanceTraveled { get; private set; }
 
+    public float RampUpInterval;
+
     public static float SpawnDistance = 150;
     public float ObstacleStartingForce;
 
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     private Vector3 velocity;
     public float CurrentSpeed { get => -velocity.z; }
+
+    private float _nextSpawnMilestone = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -93,7 +97,13 @@ public class GameManager : MonoBehaviour
         }
 
         Vector3 offset = velocity * Time.deltaTime;
+
         DistanceTraveled += -offset.z;
+        if (DistanceTraveled >= _nextSpawnMilestone)
+        {
+            Spawn();
+        }
+        Debug.Log($"Distance traveled: {DistanceTraveled}");
 
         foreach (var tunnelPiece in TunnelPieces)
         {
@@ -106,20 +116,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Spawn()
+    private void Spawn()
     {
-        while (true)
+        float difficulty = DistanceTraveled / RampUpInterval;
+        int obstaclesToSpawn = Random.Range(1, (int)(difficulty) + 3);
+        for (int i = 0; i < obstaclesToSpawn; i++)
         {
-            // TODO: update spawn rate/difficulty to scale on distance instead of speed
-            float difficultyRatio = CurrentSpeed / MaxSpeed;
-            int obstaclesToSpawn = Random.Range(1, (int)(15 * difficultyRatio) + 3);
-            for (int i = 0; i < obstaclesToSpawn; i++)
-            {
-                SpawnObstacle();
-            }
-            float spawnDelay = Mathf.Max(0.1f, 0.5f - difficultyRatio);
-            yield return new WaitForSeconds(spawnDelay);
+            SpawnObstacle();
         }
+
+        _nextSpawnMilestone += Random.Range(75, 125) / Mathf.Max(difficulty, 5) * 5;
     }
 
     private void SpawnObstacle()
